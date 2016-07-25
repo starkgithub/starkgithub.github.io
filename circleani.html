@@ -1,0 +1,41 @@
+<!doctype thml>
+<html>
+<head>
+  <title>Data-Driven Documents</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+  <script>
+
+
+  var canvas = d3.select("body").append("svg")
+    .attr("width",300)
+    .attr("height",300);
+
+  function render(){
+  //  var circle = canvas.selectAll("circle")
+      //  circle.remove();
+        var circle=canvas.append("circle")
+              .attr("cx",30)
+              .attr("cy",150)
+              .attr("r",15)
+              .attr("fill","red");
+        circle.transition()
+                .duration(2000)
+                .delay(1000)
+              .attr("cx",300).remove();
+    }
+
+    render();
+
+    d3.interval(render, 3000);
+/*
+d3.json("mydata.json", function(dataset){
+    dataset.forEach(function(d){ console.log(d);});
+});
+*/
+
+  </script>
+
+</body>
+</html>
