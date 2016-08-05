@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <title>JS Bin</title>
+</head>
+<body>
+  <input type="text" oninput="aaa(this.value)"  maxlength="3" size="3"/>회
+  <input type="text" oninput="bbb(this.value)"  maxlength="1" size="1"/>출현
+  <div id="demo1" style="background-color:yellow">  </div>
+
+  <script>
+    var ch_number  = 0;
+    var chk=1;
+    var dataset;
+
+    function aaa(data) {
+        ch_number=data-1;
+
+        StrNumber =dataset[ch_number].th+"회 : "+dataset[ch_number].n1+","+dataset[ch_number].n2+","+dataset[ch_number].n3+","+dataset[ch_number].n4+","+dataset[ch_number].n5+","+dataset[ch_number].n6;
+        document.getElementById("demo1").innerHTML=StrNumber;
+        var p = d3.select("body").selectAll("p").remove();
+        render(dataset);
+
+    }
+    function bbb(data) {
+        chk=data;
+        var p = d3.select("body").selectAll("p").remove();
+        render(dataset);
+    }
+
+    function render(data){
+      //var ch_number = 710-1;
+
+      var p = d3.select("body");
+
+
+      data.forEach(function(d){
+        var cnt=0;
+
+        for(var i=1;i<7;i++){
+          var ch1="n"+i;
+          for(var j=1;j<7;j++){
+            var ch2="n"+j;
+            if(data[ch_number][ch1]===d[ch2]){
+              cnt++;
+            }
+          }
+        }
+        if(cnt>=chk){
+          console.log(d.th+"회 : "+d.n1+","+d.n2+","+d.n3+","+d.n4+","+d.n5+","+d.n6+" 출현 : "+cnt);
+          var string = d.th+"회 : "+d.n1+","+d.n2+","+d.n3+","+d.n4+","+d.n5+","+d.n6+" 출현 : "+cnt;
+          p.append("p")
+           .attr("fill","blue")
+           .text(string);
+
+        }
+
+      });
+    }
+
+
+
+
+
+   d3.csv("number.csv",type, function(error,data){
+      if (error) throw error;
+      dataset=data;
+
+      /*
+      data.forEach(function(d){
+        console.log(d.th+"회 "+d.n1+","+d.n2+","+d.n3+","+d.n4+","+d.n5+","+d.n6+" 보너스 : "+d.b1);
+        console.log("총합 : "+(d.n1+d.n2+d.n3+d.n4+d.n5+d.n6));
+        //console.log(d);
+
+      });
+      */
+      render(dataset);
+
+
+  });
+
+  function type(d){
+    d.n1=+d.n1;
+    d.n2=+d.n2;
+    d.n3=+d.n3;
+    d.n4=+d.n4;
+    d.n5=+d.n5;
+    d.n6=+d.n6;
+    return d;
+  }
+
+  </script>
+</body>
+</html>
