@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <title>TEST PROJECT</title>
+</head>
+<body>
+  <input type="text" oninput="aaa(this.value)" value="1" maxlength="3" size="3"/>~
+
+  <input type="text" oninput="bbb(this.value)" value="713" maxlength="3" size="3"/>범위
+  <div id="demo1" style="background-color:yellow">  </div>
+  <div id="demo2" style="background-color:yellow">  </div>
+
+  <script>
+  var dataset;
+  var a=0,b=712;
+
+  function aaa(val){
+  //  d3.select("body").selectAll("div").remove();
+    a=val-1;
+    render(dataset);
+  }
+  function bbb(val){
+  //  d3.select("body").selectAll("div").remove();
+    b=val-1;
+    render(dataset);
+  }
+  function render(data){
+
+
+    var m = new Array();
+
+    for(var i=0;i<46;i++){
+      m[i]=0;
+    }
+
+    for(var i=a;i<=b;i++){
+       for(var j=1;j<7;j++){
+          var ch="n"+j;
+            m[data[i][ch]]=1;
+        }
+    }
+
+
+    var str_m1="";
+    var str_m2="";
+    var cnt1=0,cnt2=0;
+    for(var i=1;i<46;i++){
+      if(m[i]!=0){
+        str_m1=str_m1+","+i;
+        cnt1++;
+      }else{
+        str_m2=str_m2+","+i;
+        cnt2++;
+      }
+    }
+
+    var p = d3.select("div#demo1")
+          .text("출현 "+cnt1+"개 "+str_m1);
+
+    var p = d3.select("div#demo2")
+          .text("미출현 "+cnt2+"개 "+str_m2);
+
+  }
+
+  d3.csv("number.csv",type, function(error,data){
+     if (error) throw error;
+     dataset=data;
+     data.forEach(function(d){
+  //   console.log(d.*/th+"회 "+d.n1+","+d.n2+","+d.n3+","+d.n4+","+d.n5+","+d.n6+" 보너스 : "+d.b1);
+  //   console.log("총합 : "+(d.n1+d.n2+d.n3+d.n4+d.n5+d.n6));
+  //   console.log(d);
+
+     });
+     render(data);
+  });
+
+  function type(d){
+    d.n1=+d.n1;
+    d.n2=+d.n2;
+    d.n3=+d.n3;
+    d.n4=+d.n4;
+    d.n5=+d.n5;
+    d.n6=+d.n6;
+    return d;
+  }
+
+  </script>
+</body>
+</html>
