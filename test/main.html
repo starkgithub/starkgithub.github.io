@@ -5,8 +5,25 @@
   <title>TESTING</title>
 </head>
 <body>
+<script>
+ function link_target(num) {
+  if(num == "1") {
+document.iframe1.location.replace('project0.html');
+document.iframe2.location.replace('https://starkgithub.github.io/test/test1.html');
+document.iframe3.location.replace('https://starkgithub.github.io/test/test1.html');
+document.iframe4.location.replace('https://starkgithub.github.io/test/test2.html');
+  }
+ }
+</script>
+<a href=# onclick="link_target('1')">실행</a><br />
+<iframe src='' name='iframe1' width=1000 height=100 scrolling="yes"></iframe>
+<br />
+<iframe src='' name='iframe2' width=300 height=600 scrolling="yes"></iframe>
+<iframe src='' name='iframe3' width=300 height=600 scrolling="yes"></iframe>
+<iframe src='' name='iframe4' width=300 height=600 scrolling="yes"></iframe>
+<textarea id="test"  cols="50" rows="30">
 
-<iframe src='https://starkgithub.github.io/test/test1.html' name='iframe1' width=300 height=600 scrolling="yes"></iframe>
-<iframe src='https://starkgithub.github.io/test/test2.html' name='iframe2' width=400 height=600 scrolling="yes"></iframe>
+</textarea>
+
 </body>
 </html>
