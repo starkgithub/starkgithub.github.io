@@ -7,29 +7,34 @@
   <title>TEST PROJECT</title>
 </head>
 <body>
-  <input type="text" oninput="aaa(this.value)" value="1" maxlength="3" size="3"/>~
+  <input id="num1" type="text" oninput="aaa(this.value)" maxlength="3" size="3"/>~
+  <input id="num2" type="text" oninput="bbb(this.value)" maxlength="3" size="3"/>범위
 
-  <input type="text" oninput="bbb(this.value)" value="714" maxlength="3" size="3"/>범위
   <div id="demo1" style="background-color:yellow">  </div>
   <div id="demo2" style="background-color:yellow">  </div>
 
+  <p>  보너스 포함 : </p>
+
+  <div id="demo11" style="background-color:yellow">  </div>
+  <div id="demo22" style="background-color:yellow">  </div>
+
   <script>
   var dataset;
-  var a=0,b=713;
+  var a,b;
 
   function aaa(val){
   //  d3.select("body").selectAll("div").remove();
     a=val-1;
-    render(dataset);
+    render1(dataset);
+    render2(dataset);
   }
   function bbb(val){
   //  d3.select("body").selectAll("div").remove();
     b=val-1;
-    render(dataset);
+    render1(dataset);
+    render2(dataset);
   }
-  function render(data){
-
-
+  function render1(data){
     var m = new Array();
 
     for(var i=0;i<46;i++){
@@ -65,25 +70,71 @@
 
   }
 
+  function render2(data){
+    var m = new Array();
+
+    for(var i=0;i<46;i++){
+      m[i]=0;
+    }
+
+    for(var i=a;i<=b;i++){
+       for(var j=1;j<8;j++){
+          var ch="n"+j;
+            m[data[i][ch]]=1;
+        }
+    }
+
+
+    var str_m1="";
+    var str_m2="";
+    var cnt1=0,cnt2=0;
+    for(var i=1;i<46;i++){
+      if(m[i]!=0){
+        str_m1=str_m1+","+i;
+        cnt1++;
+      }else{
+        str_m2=str_m2+","+i;
+        cnt2++;
+      }
+    }
+
+    var p = d3.select("div#demo11")
+          .text("출현 "+cnt1+"개 "+str_m1);
+
+    var p = d3.select("div#demo22")
+          .text("미출현 "+cnt2+"개 "+str_m2);
+
+  }
+
   d3.csv("number.csv",type, function(error,data){
      if (error) throw error;
      dataset=data;
-     data.forEach(function(d){
-  //   console.log(d.*/th+"회 "+d.n1+","+d.n2+","+d.n3+","+d.n4+","+d.n5+","+d.n6+" 보너스 : "+d.b1);
-  //   console.log("총합 : "+(d.n1+d.n2+d.n3+d.n4+d.n5+d.n6));
-  //   console.log(d);
+     a = d3.min(data, function(d) {return d.th; })-1;
+     b = d3.max(data, function(d) {return d.th; })-1;
 
+     document.getElementById("num1").value=a+1;
+     document.getElementById("num2").value=b+1;
+     render1(data);
+     render2(data);
+
+/*
+     data.forEach(function(d){
+     console.log(d.th+"회 "+d.n1+","+d.n2+","+d.n3+","+d.n4+","+d.n5+","+d.n6+" 보너스 : "+d.b1);
+     console.log("총합 : "+(d.n1+d.n2+d.n3+d.n4+d.n5+d.n6));
+     console.log(d);
      });
-     render(data);
+*/
   });
 
   function type(d){
+    d.th=+d.th;
     d.n1=+d.n1;
     d.n2=+d.n2;
     d.n3=+d.n3;
     d.n4=+d.n4;
     d.n5=+d.n5;
     d.n6=+d.n6;
+    d.n7=+d.n7
     return d;
   }
 
